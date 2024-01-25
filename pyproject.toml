@@ -1,7 +1,7 @@
 [project]
-name = "regexmatch"
+name = "one_line"
 version = "0.0.0"
-description = "Template repo for Guardrails Hub validators."
+description = "Validates that a value is a single line, based on whether or not the output has a newline character."
 authors = [
     {name = "Guardrails AI", email = "contact@guardrailsai.com"}
 ]

@@ -1,3 +1,3 @@
-from .main import RegexMatch
+from .main import OneLine
 
-__all__ = ["RegexMatch"]
+__all__ = ["OneLine"]
