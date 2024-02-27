@@ -26,22 +26,30 @@ In this example, we’ll test that a generated LLM sentence is a single line.
 
 ```python
 # Import Guard and Validator
-from guardrails.hub import ValidChoices
+from guardrails.hub import OneLine
 from guardrails import Guard
 
-# Initialize Validator
-val = OneLine(on_fail="fix")
+# Use the Guard with the validator
+guard = Guard().use(OneLine, on_fail="exception")
 
-# Setup Guard
-guard = Guard.from_string(
-    validators=[val, ...],
+# Test passing response
+guard.validate(
+    "Christopher Nolan's Tenet is a mind-bending action thriller that will keep you on the edge of your seat. The film is a must-watch for all Nolan fans."
 )
 
-guard.parse("Guardrails are essential for AI dev.")  # Validator passes
-guard.parse(
-    "Guardrails are essential for AI dev. "
-    "You can initialize guadrails for strings, JSON objects and via python and javascript."
-)  # Validator fails
+try:
+    # Test failing response
+    guard.validate(
+        "Christopher Nolan's Tenet is a mind-bending action thriller that will keep you on the edge of your seat\n. The film is a must-watch for all Nolan fans\n. Dunkirk was a great movie too."
+    )
+except Exception as e:
+    print(e)
+```
+Output:
+```console
+Validation failed for field with errors: Value Christopher Nolan's Tenet is a mind-bending action thriller that will keep you on the edge of your seat
+. The film is a must-watch for all Nolan fans
+. Dunkirk was a great movie too. is not a single line.
 ```
 
 ### Validating JSON output via Python
@@ -50,12 +58,12 @@ In this example, we verify that a summary of a product contains a single line.
 
 ```python
 # Import Guard and Validator
-from pydantic import BaseModel
-from guardrails.hub import ValidChoices
+from pydantic import BaseModel, Field
+from guardrails.hub import OneLine
 from guardrails import Guard
 
 # Initialize Validator
-val = OneLine(on_fail="fix")
+val = OneLine(on_fail="exception")
 
 # Create Pydantic BaseModel
 class ProductInfo(BaseModel):
@@ -67,15 +75,35 @@ class ProductInfo(BaseModel):
 # Create a Guard to check for valid Pydantic output
 guard = Guard.from_pydantic(output_class=ProductInfo)
 
-# Run LLM output generating JSON through guard
-guard.parse("""
-{
-    "product_name": "Hairspray",
-    "product_summary": "This product helps your styled hair stay in place."
-}
-""")
-```
+# Passing response
+guard.parse(
+    """
+    {
+        "product_name": "Hairspray",
+        "product_summary": "This product helps your styled hair stay in place."
+    }
+    """
+)
 
+# Failing response
+try:
+    # Run LLM output generating JSON through guard
+    guard.parse(
+        """
+        {
+            "product_name": "Hairspray",
+            "product_summary": "This product helps your styled hair stay in place\n. It is a very good product."
+        }
+        """
+    )
+except Exception as e:
+    print(e)
+```
+Output:
+```console
+Validation failed for field with errors: Value This product helps your styled hair stay in place
+. It is a very good product. is not a single line.
+```
 
 ## API Reference
 
