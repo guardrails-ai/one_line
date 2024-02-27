@@ -10,7 +10,7 @@ from guardrails.validator_base import (
 )
 
 
-@register_validator(name="one_line", data_type="string")
+@register_validator(name="guardrails/one_line", data_type="string")
 class OneLine(Validator):
     """Validates that a value is a single line, based on whether or not the
     output has a newline character (\\n).
@@ -19,12 +19,13 @@ class OneLine(Validator):
 
     | Property                      | Description                            |
     | ----------------------------- | -------------------------------------- |
-    | Name for `format` attribute   | `one-line`                             |
+    | Name for `format` attribute   | `guardrails/one_line`                  |
     | Supported data types          | `string`                               |
     | Programmatic fix              | Keep the first line, delete other text |
     """
 
     def validate(self, value: Any, metadata: Dict) -> ValidationResult:
+        """Validation method for the OneLine validator."""
         logger.debug(f"Validating {value} is a single line...")
 
         if len(value.splitlines()) > 1:

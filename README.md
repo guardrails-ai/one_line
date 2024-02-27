@@ -4,18 +4,18 @@
 | --- | --- |
 | Date of development | Feb 15, 2024 |
 | Validator type | Format |
-| Blog |  |
+| Blog | - |
 | License | Apache 2 |
 | Input/Output | Output |
 
 ## Description
 
-The validator ensures that a generated output is a single line (i.e. sentence only). It is a posthoc validator, i.e. it is applied on the output of the LLM response.
+The validator ensures that a generated output is a single line based on whether the output has a newline character.
 
 ## Installation
 
 ```bash
-$ guardrails hub install hub://guardrails/one_line
+guardrails hub install hub://guardrails/one_line
 ```
 
 ## Usage Examples
@@ -92,7 +92,7 @@ Initializes a new instance of the Validator class.
 
 <br>
 
-**`__call__(self, value, metadata={}) → ValidationOutcome`**
+**`__call__(self, value, metadata={}) → ValidationResult`**
 
 <ul>
 
