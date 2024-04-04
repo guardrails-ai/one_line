@@ -24,7 +24,7 @@ class OneLine(Validator):
     | Programmatic fix              | Keep the first line, delete other text |
     """
 
-    def validate(self, value: Any, metadata: Dict) -> ValidationResult:
+    def validate(self, value: Any, metadata: Dict = {}) -> ValidationResult:
         """Validation method for the OneLine validator."""
         logger.debug(f"Validating {value} is a single line...")
 
