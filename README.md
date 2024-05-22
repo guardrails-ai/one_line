@@ -142,4 +142,3 @@ Note:
 - **`metadata`** *(dict):* A dictionary containing metadata required for validation. No additional metadata keys are needed for this validator.
 
 </ul>
-
