@@ -1,16 +1,21 @@
 ## Overview
 
 | Developed by | Guardrails AI |
-| --- | --- |
 | Date of development | Feb 15, 2024 |
 | Validator type | Format |
-| Blog | - |
+| Blog |  |
 | License | Apache 2 |
 | Input/Output | Output |
 
 ## Description
 
+### Intended Use
 The validator ensures that a generated output is a single line based on whether the output has a newline character.
+
+### Requirements
+
+* Dependencies:
+    - guardrails-ai>=0.4.0
 
 ## Installation
 
@@ -105,7 +110,7 @@ Validation failed for field with errors: Value This product helps your styled ha
 . It is a very good product. is not a single line.
 ```
 
-## API Reference
+# API Reference
 
 **`__init__(self, on_fail="noop")`**
 <ul>
@@ -137,3 +142,4 @@ Note:
 - **`metadata`** *(dict):* A dictionary containing metadata required for validation. No additional metadata keys are needed for this validator.
 
 </ul>
+
